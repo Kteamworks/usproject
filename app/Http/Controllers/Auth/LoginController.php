@@ -121,7 +121,7 @@ class LoginController extends Controller
                         ->withErrors([
                             'email'       => 'Invalid username, Please try again',
                             'password'    => 'Invalid password, Please try again',
-                        ])->with(['error' => 'Invalid' ]);
+                        ])->with(['error' => 'Invalid Credentials' ]);
         // Increment login attempts
     }
 
