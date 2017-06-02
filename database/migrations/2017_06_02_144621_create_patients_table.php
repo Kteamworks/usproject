@@ -13,7 +13,7 @@ class CreatePatientsTable extends Migration
      */
     public function up()
     {
-            //
+        Schema::create('patients', function (Blueprint $table) {
 	$table->increments('id');
     $table->string('title');
 	$table->string('language');
@@ -58,6 +58,7 @@ class CreatePatientsTable extends Migration
 	$table->string('vision_impairment');
 	$table->string('drg_id');
 	            $table->timestamps();
+                            });
     }
 
     /**
