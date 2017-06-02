@@ -1194,7 +1194,7 @@
 <script src="{{asset("js/data-table/js/dataTables.colVis.min.js")}}"></script>
 <script src="{{asset("js/data-table/js/dataTables.responsive.min.js")}}"></script>
 <script src="{{asset("js/data-table/js/dataTables.scroller.min.js")}}"></script>
-<script src="{{asset("js/data-table-init.js")}}"></script>
+<!--<script src="{{asset("js/data-table-init.js")}}"></script> -->
 
 
 

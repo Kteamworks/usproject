@@ -52,6 +52,7 @@
                                 <?php $patients = \DB::table('patient_data')->get(); foreach($patients as $patient) { ?>
                                 <tr role="row" class="odd"><td class=" details-control"></td><td class="sorting_1">{!! $patient->fname !!}</td><td>5407</td><td>2008/11/28</td><td>5407</td></tr>
                                 <?php } ?>
+                                      </tbody>
                                 <tfoot>
                                <tr>
                                     <th></th>
@@ -62,7 +63,7 @@
                                 </tr>
                                 </tfoot>
     
-                                </tbody>
+                          
                             </table>
                         </section>
                     </div>

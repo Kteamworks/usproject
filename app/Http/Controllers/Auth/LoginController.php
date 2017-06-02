@@ -119,8 +119,8 @@ class LoginController extends Controller
         return redirect()->back()
                         ->withInput($request->only('email', 'remember'))
                         ->withErrors([
-                            'email'       => $this->getFailedLoginMessage(),
-                            'password'    => $this->getFailedLoginMessage(),
+                            'email'       => 'Invalid username, Please try again',
+                            'password'    => 'Invalid password, Please try again',
                         ])->with(['error' => 'Invalid' ]);
         // Increment login attempts
     }
