@@ -602,6 +602,7 @@
                                         Help
                                     </a>
                                 </li>
+                                <li><a href="{{url('logout')}}"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                             </ul>
                         </li>
                         <li>
