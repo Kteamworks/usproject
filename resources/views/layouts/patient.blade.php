@@ -8,7 +8,7 @@
     <meta name="keyword" content="slick, flat, dashboard, bootstrap, admin, template, theme, responsive, fluid, retina">
     <link rel="shortcut icon" href="javascript:;" type="{{asset("image/png")}}">
 
-    <title>SlickLab - data table</title>
+    <title>Demo</title>
 
     <!--right slidebar-->
     <!--right slidebar-->
@@ -109,11 +109,13 @@
                     <li>
                         <h3 class="navigation-title">Navigation</h3>
                     </li>
-                    <li class="active"><a href="index.html"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
+                     @if(Auth::user())
+                    <li class="active"><a href="{{url('/home')}}"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
+                     @endif
                     <li class="menu-list">
                         <a href=""><i class="fa fa-laptop"></i>  <span>Patient</span></a>
                         <ul class="child-list">
-                            <li><a href="patientdetails.html"> Patient Details</a></li>
+                            <li><a href="{{url('patients')}}"> Patient Details</a></li>
                             <li><a href="#"> Summary</a></li>
                             
                         </ul>
@@ -575,8 +577,16 @@
 
                         <li>
                             <a href="javascript:;" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <img src="img/avatar-mini.jpg" alt="">John Doe
+                                
+                                                                @if(Auth::user())
+                                    @if(Auth::user()->profile_pic)
+                                        <img src="{{asset('img')}}{{'/'}}{{Auth::user()->profile_pic}}"class="user-image" alt="User Image"/>
+                                    @else
+                                        <img src="{{ Gravatar::src(Auth::user()->email) }}" class="user-image" alt="User Image">
+                                    @endif
+                                    {!! Auth::user()->fname." ".Auth::user()->lname !!}
                                 <span class=" fa fa-angle-down"></span>
+                                @endif
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu purple pull-right">
                                 <li><a href="javascript:;">  Profile</a></li>
@@ -592,7 +602,6 @@
                                         Help
                                     </a>
                                 </li>
-                                <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                             </ul>
                         </li>
                         <li>

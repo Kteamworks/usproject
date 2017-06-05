@@ -30,6 +30,7 @@ class CreateUsersTable extends Migration
             $table->string('state');
 			$table->string('zip');
 			$table->string('phone');
+                        			$table->string('profile_pic');
 			$table->string('created_by'); 
 			$table->string('updated_by'); 
             $table->rememberToken();
