@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DrgServices extends Model
 {
-    //
+    protected $fillable = [
+        'service_name','service_description','service_group_id', 'service_name', 'budgetcost','active', 'service_id', 'created_by', 'provider'
+    ];
 }
