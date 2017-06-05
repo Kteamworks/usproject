@@ -24,6 +24,7 @@ class User extends Model implements
      *
      * @var array
      */
+    protected $table = 'users';
     protected $fillable = [
         'user_id','email','user_name', 'password', 'authorized','active', 'fname', 'lname', 'mname','title','street','city','state','zip','phone'
     ];
