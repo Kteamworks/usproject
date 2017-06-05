@@ -1,10 +1,28 @@
 @extends('layouts.patient')
 
+<!-- breadcrumbs -->
+@section('breadcrumbs')
+            <!-- page head start-->
+            <div class="page-head">
+                <h3 class="m-b-less">
+                    Patient Details
+                </h3>
+                <!--<span class="sub-title">Welcome to Static Table</span>-->
+                <div class="state-information">
+                    <ol class="breadcrumb m-b-less bg-less">
+                        <li><a href="#">Dashboard</a></li>
+                        <li><a href="#">DRG</a></li>
+                        <li class="active">Drg Details</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- page head end-->
 
+@stop
+<!-- /breadcrumbs -->
 <!-- content -->
-@section('pt-header')
-          <!--body wrapper start-->
-           <!--body wrapper start-->
+@section('pt-heading')
+                    <!--body wrapper start-->
             <div class="wrapper">
 
                 <div class="panel invoice">
@@ -12,7 +30,7 @@
                         <div class="row">
 
                             <div class="col-xs-6">
-                                <h3>Create DRG Budget</h3>
+                                <h3>DRG Budget Details</h3>
                             </div>
 
                         </div>
@@ -130,7 +148,6 @@
                     </div>
                 </div>
 
-            </div>
             </div>
             <!--body wrapper end-->
 

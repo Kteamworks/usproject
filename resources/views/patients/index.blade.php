@@ -72,7 +72,6 @@
 
             </div>
             <!--body wrapper end-->
-
 @stop
 @section('content')
 

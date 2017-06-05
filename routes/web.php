@@ -17,7 +17,6 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('dashboard');
 });
-
 Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@getLogin']);
 Route::post('post-login',  ['as' => 'post.login', 'uses' => 'Auth\LoginController@postLogin']);
 //Route::get('patients', 'Auth\PatientController@index');	

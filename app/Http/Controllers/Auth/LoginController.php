@@ -43,7 +43,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => ['logout', 'getLogout']]);
+        $this->middleware('guest', ['except' => ['logout', 'logout']]);
     }
 	    /**
      * Get login page.
@@ -62,7 +62,7 @@ class LoginController extends Controller
                 return view('auth.login');
             }
     }
-	
+            
 	
     /**
      * Post of login page.

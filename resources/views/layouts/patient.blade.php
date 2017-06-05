@@ -122,7 +122,7 @@
                     </li>
                     <li class="menu-list"><a href=""><i class="fa fa-book"></i> <span>DRG Budget</span></a>
                         <ul class="child-list">
-                            <li><a href="createdrg.html"> Create DRG Budget</a></li>
+                            <li><a href="{{url('drgs')}}"> DRG Budget Details</a></li>
                             <li><a href="#"> Other</a></li>
                             
                         </ul>
