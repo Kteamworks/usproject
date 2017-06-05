@@ -63,7 +63,7 @@
                                     <div class="col-lg-3">
                             <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Service</label>
 
-                                        <select class="form-control" id="e4">
+                                        <select class="form-control" >
                 <option value="Post Surgery Stay">Post Surgery Stay</option>
     <option value="X-Ray">X-Ray</option>
     <option value="Pharma">Pharma</option>
@@ -91,7 +91,7 @@
                                     <div class="col-lg-2">
                             <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Provider</label>
 
-                                         <select class="form-control" id="e4">
+                                         <select class="form-control" >
                 <option value="Post Surgery Stay">External</option>
     <option value="X-Ray">Internal</option>
 

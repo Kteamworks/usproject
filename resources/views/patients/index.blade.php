@@ -41,16 +41,17 @@
                             <table class="table data-table row-details-data-table" cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
-                                    <th></th>
+                                    <th>S/L</th>
                                     <th>Name</th>
                                     <th>Eisode Id</th>
                                     <th>Date Of Admission</th>
                                     <th>Patient Id</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                             <tbody>
-                                <?php $patients = \DB::table('patient_data')->get(); foreach($patients as $patient) { ?>
-                                <tr role="row" class="odd"><td class=" details-control"></td><td class="sorting_1">{!! $patient->fname !!}</td><td class="sorting_2">{!! $patient->drg_episode_id !!}</td><td class="sorting_3">{!! $patient->DOB !!}</td><td class="sorting_4">{!! $patient->genericname1 !!}</td></tr>
+                                <?php $patients = \DB::table('patient_data')->paginate(10); foreach($patients as $patient) { ?>
+                                <tr role="row" class="odd"><td >{!! $patient->id !!}</td><td class="sorting_1">{!! $patient->fname !!}</td><td class="sorting_2">{!! $patient->drg_episode_id !!}</td><td class="sorting_3">{!! $patient->DOB !!}</td><td class="sorting_4">{!! $patient->genericname1 !!}</td><td><i class="fa fa-pencil-square-o" aria-hidden="true" data-toggle="modal" href="#editp"></i> | <i class="fa fa-trash-o" aria-hidden="true"></i></td></tr>
                                 <?php } ?>
                                       </tbody>
                                 <tfoot>
@@ -61,13 +62,16 @@
                                     <th>Date Of Admission</th>
                                     <th>Patient Id</th>
                                 </tr>
+                                
                                 </tfoot>
     
                           
                             </table>
+                            <div class="pull-right">
+                            {{ $patients->links() }}
+                            </div>
                         </section>
                     </div>
-
                 </div>
 
             </div>
