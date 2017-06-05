@@ -585,6 +585,7 @@ Alcoholic:</label>
                                 <tr>
                                     <th></th>
                                     <th>Name</th>
+                                    <th>Episode Id</th>
                                     <th>Date Of Admission</th>
                                     <th>Patient Id</th>
                                 </tr>
