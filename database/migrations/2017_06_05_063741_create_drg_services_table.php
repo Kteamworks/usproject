@@ -18,7 +18,6 @@ class CreateDrgServicesTable extends Migration
   $table->string('service_name');
 $table->string('service_description');
  $table->Integer('service_group_id');
-  $table->Integer('service_name');
   $table->Integer('budgetcost');
   $table->string('taxrates');
   $table->Integer('active');
