@@ -8,6 +8,6 @@ class DrgProgress extends Model
 {
     protected $table = 'drg_progress';
     protected $fillable = [
-        'pid','patient_episode_id','sg_id', 'service_id', 'service_date','service_status', 'service_cost', 'created_by', 'provider','authorized','units'
+        'pid','episode_id','drg_id', 'service_id', 'units','service_date','service_status', 'service_cost', 'created_by', 'provider','authorized'
     ];
 }

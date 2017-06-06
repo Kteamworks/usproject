@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDrgServicesTable extends Migration
+class CreateServicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateDrgServicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('drg_services', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('service_id');
-            $table->string('drg_id');
+            $table->string('name');
+            $table->string('description');
+            $table->integer('budget_cost');
             $table->integer('units');
-            $table->string('provider');
+            $table->string('tax_rates');
+            $table->boolean('active');
             $table->string('created_by');
             $table->timestamps();
         });
@@ -31,6 +33,6 @@ class CreateDrgServicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('drg_services');
+        //
     }
 }

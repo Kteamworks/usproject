@@ -15,7 +15,7 @@ class CreatePatientsTable extends Migration {
         Schema::create('patients', function (Blueprint $table) {
             $table->increments('id');
             $table->string('episode_id')->unique();
-            $table->string('service_group_id');
+            $table->string('drg_id');
             $table->string('title');
             $table->string('language');
             $table->string('fname');
@@ -34,7 +34,7 @@ class CreatePatientsTable extends Migration {
             $table->string('contact_relationship');
             $table->dateTime('date');
             $table->string('sex');
-            $table->Integer('providerID');
+            $table->integer('providerID');
             $table->string('ref_providerID');
             $table->string('email');
             $table->string('pubpid');

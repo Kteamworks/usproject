@@ -31,8 +31,8 @@
                     <div class="col-sm-12">
                         <section class="panel">
                             <header class="panel-heading ">
-                                DRG Details
-                                <button type="button" class="btn btn-info m-b-10" data-toggle="modal" href="#myModal">Add Drg</button>
+                                DRG Details &nbsp;&nbsp;
+                                <button type="button" class="btn btn-info m-b-10" data-toggle="modal" title="Add budget details" href="#myModal"><i class="fa fa-plus"></i></button>
                                 <span class="tools pull-right">
                                     <a class="fa fa-repeat box-refresh" href="javascript:;"></a>
                                     <a class="t-close fa fa-times" href="javascript:;"></a>
@@ -157,9 +157,9 @@
                                     </div>
                                 </div>
                                   <div class="form-group">
-                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Vision Impairement</label>
+                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Vision Impairment</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name='vision_impairement' class="form-control" id="inputEmail1" placeholder="Vision Impairement ">
+                                        <input type="text" name='vision_impairment' class="form-control" id="inputEmail1" placeholder="Vision Impairement ">
                                         
                                     </div>
                                 </div>
