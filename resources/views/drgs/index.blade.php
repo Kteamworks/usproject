@@ -41,6 +41,7 @@
                             <table class="table data-table row-details-data-table" cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
+                                    <th>S/L</th>
                                     <th>DRG Code</th>
                                     <th>DRG Description</th>
                                     <th>CMS Payout</th>
@@ -49,14 +50,15 @@
                                     <th>Obesity</th>
                                     <th>Dementia</th>
                                      <th>Vision Impairment</th>
+                                     <th>Action</th>
                                 </tr>
                                 </thead>
                             <tbody>
                                 <?php $drgs = App\DrgServicesGrp::paginate(10); foreach($drgs as $drg) { ?>
-                                <!--<tr role="row" class="odd"><td >{!! $drg->id !!}</td><td class="sorting_1">{!! $drg->fname !!}</td><td class="sorting_2">{!! $drg->drg_episode_id !!}</td><td class="sorting_3">{!! $drg->DOB !!}</td><td class="sorting_4">{!! $drg->genericname1 !!}</td><td><i class="fa fa-pencil-square-o" aria-hidden="true" data-toggle="modal" href="#editp"></i> | <i class="fa fa-trash-o" aria-hidden="true"></i></td></tr>-->
+                                <tr role="row" class="odd"><td >{!! $drg->id !!}</td><td class="sorting_1">{!! $drg->title !!}</td><td class="sorting_2">{!! $drg->description !!}</td><td class="sorting_3">{!! $drg->cms_payout !!}</td><td class="sorting_3">{!! $drg->alcohol !!}</td><td class="sorting_4">{!! $drg->tobacco !!}</td><td class="sorting_3">{!! $drg->obesity !!}</td><td class="sorting_3">{!! $drg->dementia !!}</td><td class="sorting_3">{!! $drg->vision_impairment !!}</td><td><i class="fa fa-pencil-square-o" aria-hidden="true" data-toggle="modal" href="#editp"></i> | <i class="fa fa-trash-o" aria-hidden="true"></i></td></tr>
                                 <?php } ?>
                                       </tbody>
-                                <tfoot>
+<!--                                <tfoot>
                                <tr>
                                     <th>DRG Code</th>
                                     <th>DRG Description</th>
@@ -68,7 +70,7 @@
                                      <th>Vision Impairment</th>
                                 </tr>
                                 
-                                </tfoot>
+                                </tfoot>-->
     
                           
                             </table>
