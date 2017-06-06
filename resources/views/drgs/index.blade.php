@@ -95,19 +95,12 @@
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                     <h4 class="modal-title">Add DRG</h4>
                                 </div>
-                                <div class="modal-body" style="padding:0px;">
-                             
-                
-                <div class="panel-body">
-                    <div class="tab-content">
-                        <div id="home" class="tab-pane active">
-                            <section class="panel">
-                        
-                        <div class="panel-body">
+                                <div class="modal-body">
+
                                 <div class="form-group">
                                     <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">DRG Code</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name="sg_id" class="form-control" id="inputEmail1" placeholder="DRG Code">
+                                        <input type="text" name="title" class="form-control" id="inputEmail1" placeholder="DRG Code">
                                         
                                     </div>
                                 </div>
@@ -116,7 +109,7 @@
                                 <div class="form-group">
                                     <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">DRG Description</label>
                                     <div class="col-lg-10">
-                                        <input name="drgdescription" type="text" class="form-control" id="inputEmail1" placeholder="DRG Description">
+                                        <input name="description" type="text" class="form-control" id="inputEmail1" placeholder="DRG Description">
                                         
                                     </div>
                                 </div>
@@ -169,20 +162,7 @@
                                     </div>
                                 </div>
                         </div>
-                    </section>
 
-                        </div>
-        
-       
-                       
-               
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-                                  
-                                </div>
                                 <div class="modal-footer">
                                     <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
                                     <button class="btn btn-success" type="submit">Submit</button>
@@ -192,7 +172,7 @@
                                                           			  {!! Form::close() !!}
                             </div>
                         </div>
-                    </div>
+           
                     <!--end of drg add-->
                     <!--edit drg-->
                     <div class="modal fade in" id="editp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">

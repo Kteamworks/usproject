@@ -14,18 +14,17 @@ class CreateDrgServicesTable extends Migration
     public function up()
     {
         Schema::create('drg_services', function (Blueprint $table) {
-	$table->Increments('id');	
-  $table->string('service_name');
-$table->string('service_description');
- $table->Integer('service_group_id');
-  $table->Integer('budgetcost');
-  $table->string('taxrates');
-  $table->Integer('active');
-  $table->string('service_id');
-  $table->string('created_by');
-  $table->string('provider');
-	            $table->timestamps();
-                            });
+            $table->Increments('id');
+            $table->string('service_group_id');
+            $table->string('service_name');
+            $table->string('service_description');
+            $table->Integer('budget_cost');
+            $table->string('tax_rates');
+            $table->Integer('active');
+            $table->string('created_by');
+            $table->string('provider');
+            $table->timestamps();
+        });
     }
 
     /**
