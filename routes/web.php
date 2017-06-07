@@ -22,4 +22,5 @@ Route::post('post-login',  ['as' => 'post.login', 'uses' => 'Auth\LoginControlle
 //Route::get('patients', 'Auth\PatientController@index');	
 Route::resource('patients', 'Patient\PatientController');
 Route::resource('drgs', 'Drg\DrgController');
+Route::resource('drg-services', 'DrgServices\DrgServicesController');
         

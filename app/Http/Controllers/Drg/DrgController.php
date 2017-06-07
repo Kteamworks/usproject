@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Drg;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DrgRequest;
-use App\DrgServicesGrp;
+use App\Drg;
 
 class DrgController extends Controller
 {
@@ -35,7 +35,7 @@ class DrgController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(DrgRequest $request, DrgServicesGrp $drg_srv_grp)
+    public function store(DrgRequest $request, Drg $drg_srv_grp)
     {
         $drg_srv_grp->fill($request->all())->save();
         return redirect()->back()->with('Success', 'DRG Created Successfully!');
