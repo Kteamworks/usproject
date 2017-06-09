@@ -133,8 +133,8 @@
                             <section class="panel">
                         <?php $drg_names = App\Drg::all() ?>
                         <div class="panel-body">
-                             <input type="hidden" name="episode_id" class="form-control" id="inputEmail1" value="DRGEP002" placeholder="Name">
-      <INPUT TYPE=hidden NAME="pid" ID="ACCOUNT" VALUE="">
+                             <!--<input type="hidden" name="episode_id" class="form-control" id="inputEmail1" value="DRGEP002" placeholder="Name">-->
+      <!--<INPUT TYPE=hidden NAME="pid" ID="ACCOUNT" VALUE="">-->
                                 <div class="form-group">
                                     <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Name</label>
                                     <div class="col-lg-10">
@@ -513,7 +513,7 @@ Alcoholic:</label>
                     </div>
 
                     <!--end of patient add-->
-                    <script type="text/javascript">
+<!--                    <script type="text/javascript">
                     function randomNumber(len) {
     var randomNumber;
     var n = '';
@@ -526,5 +526,5 @@ Alcoholic:</label>
 }
 
 document.getElementById("ACCOUNT").value = randomNumber(6);
-</script>
+</script>-->
 @stop

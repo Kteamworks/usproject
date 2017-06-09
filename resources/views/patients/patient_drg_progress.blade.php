@@ -114,6 +114,7 @@
                 {{ Form::select('service_status', [
    '0' => 'Pending',
    '1' => 'Provided'], null, ['class' => 'form-control','disabled']) }}
+      {!! Form::hidden('service_status',null,['class' => 'form-control']) !!}
                                             <?php } else{ ?>
                    {{ Form::select('service_status', [
    '0' => 'Pending',
@@ -126,6 +127,7 @@
                 {{ Form::select('authorized', [
    '0' => 'Unauthorized',
    '1' => 'Authorized'], null, ['class' => 'form-control','disabled']) }}
+   {!! Form::hidden('authorized',null,['class' => 'form-control']) !!}
      <?php } else{ ?>
                    {{ Form::select('authorized', [
    '0' => 'Unauthorized',
