@@ -9,6 +9,20 @@ use App\Drg;
 
 class DrgController extends Controller
 {
+            /**
+     * Create a new controller instance.
+     * constructor to check
+     * 1. authentication
+     * 2. user roles
+     * 3. roles must be user.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        // checking authentication
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *

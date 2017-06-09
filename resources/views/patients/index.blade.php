@@ -30,6 +30,23 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <section class="panel">
+                            {{-- Success message --}}
+@if(Session::has('success'))
+<div class="alert alert-success alert-dismissable">
+    <i class="fa  fa-check-circle"></i>
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{Session::get('success')}}
+</div>
+@endif
+{{-- failure message --}}
+@if(Session::has('fails'))
+<div class="alert alert-danger alert-dismissable">
+    <i class="fa fa-ban"></i>
+    <b>{!! Lang::get('lang.alert') !!}!</b>
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{Session::get('fails')}}
+</div>
+@endif
                             <header class="panel-heading ">
                                 Pateint Details &nbsp;&nbsp;
                                 <button type="button" class="btn btn-info m-b-10" data-toggle="modal" href="#myModal"><i class="fa fa-plus"></i></button>
@@ -45,13 +62,15 @@
                                     <th>Name</th>
                                     <th>Eisode Id</th>
                                     <th>Date Of Admission</th>
-                                    <th>Patient Id</th>
+                                    <th>DRG</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                             <tbody>
-                                <?php $patients = \DB::table('patient_data')->paginate(10); foreach($patients as $patient) { ?>
-                                <tr role="row" class="odd"><td >{!! $patient->id !!}</td><td class="sorting_1">{!! $patient->fname !!}</td><td class="sorting_2">{!! $patient->drg_episode_id !!}</td><td class="sorting_3">{!! $patient->DOB !!}</td><td class="sorting_4">{!! $patient->genericname1 !!}</td><td><i class="fa fa-pencil-square-o" aria-hidden="true" data-toggle="modal" href="#editp"></i> | <i class="fa fa-trash-o" aria-hidden="true"></i></td></tr>
+                                <?php $patients = App\Patient::paginate(10); foreach($patients as $patient) { 
+                                    $drg_name = App\Drg::whereId($patient->drg_id)->first(); ?>
+                                <tr role="row" class="odd"><td >{!! $patient->id !!}</td><td class="sorting_1">{!! $patient->fname !!}</td><td class="sorting_2">{!! $patient->episode_id !!}</td><td class="sorting_3">{!! $patient->DOB !!}</td><td class="sorting_4">{!! $drg_name->title !!}</td>
+                                    <td><a href="{{route('patients.show', $patient->id)}}"><i class="fa fa-eye" aria-hidden="true"></i></a> | <i class="fa fa-pencil-square-o" aria-hidden="true" data-toggle="modal" href="#editp"></i> | <i class="fa fa-trash-o" aria-hidden="true"></i></td></tr>
                                 <?php } ?>
                                       </tbody>
                                 <tfoot>
@@ -112,12 +131,15 @@
                     <div class="tab-content">
                         <div id="home" class="tab-pane active">
                             <section class="panel">
-                        
+                        <?php $drg_names = App\Drg::all() ?>
                         <div class="panel-body">
+                             <input type="hidden" name="episode_id" class="form-control" id="inputEmail1" value="DRGEP002" placeholder="Name">
+      <INPUT TYPE=hidden NAME="pid" ID="ACCOUNT" VALUE="">
                                 <div class="form-group">
                                     <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Name</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name="fname" class="form-control" id="inputEmail1" placeholder="Name">
+                                        <input type="text" name="fname" class="form-control" id="inputEmail1" placeholder="First Name">
+                                        <input type="text" name="lname" class="form-control" id="inputEmail1" placeholder="Last Name">
                                         
                                     </div>
                                 </div>
@@ -230,7 +252,7 @@
 
                 </div>
                 <div class="form-group">
-                                <label class="control-label col-md-2">DOB</label>
+                                <label class="control-label col-md-2">Date Of Birth</label>
                                 <div class="col-md-10">
                                     <input size="16" type="text" name="DOB" value="2012-06-15 14:45" readonly class="form_datetime form-control">
                                 </div>
@@ -238,7 +260,7 @@
                             <div class="form-group">
                                     <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">SSN</label>
                                     <div class="col-lg-10">
-                                        <input type="email" class="form-control" id="inputEmail1" placeholder="SSN">
+                                        <input type="text" class="form-control" id="inputEmail1" placeholder="SSN">
                                         
                                     </div>
                                 </div>
@@ -263,7 +285,7 @@
                 <div class="form-group">
                                 <label class="col-sm-2 control-label">Phone</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name='phone_cell' placeholder="" data-mask="(999) 999-9999" class="form-control">
+                                    <input type="text" name='phone_home' placeholder="" data-mask="(999) 999-9999" class="form-control">
                                     <span class="help-inline">(999) 999-9999</span>
                                 </div>
                             </div>
@@ -301,38 +323,38 @@ Address:</label>
                                 <div class="form-group">
                                     <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Emergency Contact: </label>
                                     <div class="col-lg-10">
-                                        <input type="email" class="form-control" id="inputEmail1" placeholder="Emergency Contact">
+                                        <input type="contact_relationship" class="form-control" id="inputEmail1" placeholder="Emergency Contact">
                                         
                                     </div>
                                 </div>
-                                <div class="form-group">
+<!--                                <div class="form-group">
                                     <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Work Phone:</label>
                                     <div class="col-lg-10">
                                         <input type="email" class="form-control" id="inputEmail1" placeholder="Work Phone">
                                         
                                     </div>
-                                </div>
-                                <div class="form-group">
+                                </div>-->
+<!--                                <div class="form-group">
                                     <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Trusted Email:</label>
                                     <div class="col-lg-10">
                                         <input type="email" class="form-control" id="inputEmail1" placeholder="Trusted Email">
                                         
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="form-group">
                                     <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Guardian Name (in case of minor):</label>
                                     <div class="col-lg-10">
-                                        <input type="email" name="guardiansname" class="form-control" id="inputEmail1" placeholder="Guardian Name">
+                                        <input type="text" name="guardiansname" class="form-control" id="inputEmail1" placeholder="Guardian Name">
                                         
                                     </div>
                                 </div>
-                                <div class="form-group">
+<!--                                <div class="form-group">
                                     <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Home Phone:</label>
                                     <div class="col-lg-10">
                                         <input type="email" class="form-control" id="inputEmail1" data-mask="(999) 999-9999">
                                         
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="form-group">
                                     <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">   Contact Email::</label>
                                     <div class="col-lg-10">
@@ -345,23 +367,18 @@ Address:</label>
                         <div id="profile" class="tab-pane">
                             <section class="panel1">
                                
-                                
-                                 <div class="form-group">
-                <label class="col-lg-2 col-sm-2 control-label">DRG Selection</label>
-
-                <div class="col-lg-10 col-md-8">
-
-
-                <select class="form-control" name="visittype" id="e4">
-                <option></option>
-                <option value="AF">DRG 470</option>
-               
-        
+                                                               <div class="form-group">
+                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">DRG</label>
+                                    <div class="col-lg-10">
+                                        <select class="form-control" name="drg_id">
+                <option>--select--</option>
+                <?php foreach($drg_names as $drg) { ?>
+                <option value="{!! $drg->id !!}">{!! $drg->title !!}</option>
+               <?php  } ?>
                 </select>
-                </div>
-
-                </div>
-                
+                                    </div>
+                                </div>
+                                  
 </section>
                         </div>
                         <div id="contact" class="tab-pane">
@@ -397,36 +414,36 @@ Alcoholic:</label>
                                 <div class=" col-md-6">
                                     <div style="    padding: 5px;">
                                     
-                                        <input type="radio" name="iCheck" checked class="iCheck-flat"> Yes
-                                        <input type="radio" name="iCheck" checked class="iCheck-flat"> No
+                                        <input type="radio" name="alcoholic" checked value="yes" class="iCheck-flat"> Yes
+                                        <input type="radio" name="alcoholic" checked value="no" class="iCheck-flat"> No
                                         
                                     </div>
                                     <div style="    padding: 5px;">
                                         <!-- <label class="  control-label">Smoker:  </label> -->
 
-                                        <input type="radio" name="iCheck2"  class="iCheck-flat"> Yes
-                                        <input type="radio" name="iCheck2"  class="iCheck-flat"> No
+                                        <input type="radio" name="smoker" value="yes" class="iCheck-flat"> Yes
+                                        <input type="radio" name="smoker" value="no"  class="iCheck-flat"> No
 
                                     </div>
                                     <div style="    padding: 5px;">
                                         <!-- <label class="  control-label">Obesity:</label> -->
 
-                                        <input type="radio" name="iCheck3" class="iCheck-flat"> Yes
-                                        <input type="radio" name="iCheck3" class="iCheck-flat"> No
+                                        <input type="radio" name="obesity" value="yes" class="iCheck-flat"> Yes
+                                        <input type="radio" name="obesity" value="no" class="iCheck-flat"> No
 
                                     </div>
                                     <div style="    padding: 5px;">
                                         <!-- <label class="  control-label">Dementia:</label> -->
 
-                                        <input type="radio" name="iCheck4"  class="iCheck-flat"> Yes
-                                        <input type="radio" name="iCheck4"  class="iCheck-flat"> No
+                                        <input type="radio" name="dementia" value="yes" class="iCheck-flat"> Yes
+                                        <input type="radio" name="dementia" value="no"  class="iCheck-flat"> No
 
                                     </div>
                                     <div style="    padding: 5px;">
                                         <!-- <label class="  control-label">Vision impairment:</label> -->
 
-                                        <input type="radio" name="iCheck5" class="iCheck-flat"> Yes
-                                        <input type="radio" name="iCheck5" class="iCheck-flat"> No
+                                        <input type="radio" name="vision_impairment" value="yes" class="iCheck-flat"> Yes
+                                        <input type="radio" name="vision_impairment" value="no" class="iCheck-flat"> No
 
                                     </div>
                                     
@@ -440,7 +457,7 @@ Alcoholic:</label>
                                 </div>
                                 <div class="modal-footer">
                                     <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
-                                    <button class="btn btn-success" type="submit">Submit</button>
+                                    {{ Form::submit('Save', array('class' => 'btn btn-success')) }}
                                 </div>
                    
                             </div>
@@ -496,4 +513,18 @@ Alcoholic:</label>
                     </div>
 
                     <!--end of patient add-->
+                    <script type="text/javascript">
+                    function randomNumber(len) {
+    var randomNumber;
+    var n = '';
+
+    for(var count = 0; count < len; count++) {
+        randomNumber = Math.floor(Math.random() * 10);
+        n += randomNumber.toString();
+    }
+    return n;
+}
+
+document.getElementById("ACCOUNT").value = randomNumber(6);
+</script>
 @stop

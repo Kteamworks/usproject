@@ -23,4 +23,6 @@ Route::post('post-login',  ['as' => 'post.login', 'uses' => 'Auth\LoginControlle
 Route::resource('patients', 'Patient\PatientController');
 Route::resource('drgs', 'Drg\DrgController');
 Route::resource('drg-services', 'DrgServices\DrgServicesController');
+Route::patch('patients/progress-edit/{id}','Patient\PatientController@updateProgress');
+Route::get('drg_services-delete/{id}', ['as' => 'drg_services.delete', 'uses' => 'DrgServices\DrgServicesController@getDelete']);
         

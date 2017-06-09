@@ -5,16 +5,34 @@ namespace App\Http\Controllers\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Http\Controllers\Controller;
+use App\Patient;
+use App\Http\Requests\PatientRequest;
+use App\DrgProgress;
+use App\DrgServices;
+use App\HospitalService;
 
-class PatientController extends Controller
-{
+class PatientController extends Controller {
+
+    /**
+     * Create a new controller instance.
+     * constructor to check
+     * 1. authentication
+     * 2. user roles
+     * 3. roles must be user.
+     *
+     * @return void
+     */
+    public function __construct() {
+        // checking authentication
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         return view('patients.index');
     }
 
@@ -23,8 +41,7 @@ class PatientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -34,26 +51,24 @@ class PatientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
-    {
-    $fname = Input::get('fname');
-    $sex = Input::get('sex');
-        $drivers_license = Input::get('drivers_license');
-            $blood_group = Input::get('blood_group');
-                $age = Input::get('age');
-                $postal_code = Input::get('postal_code');
-                $state = Input::get('state');
-                $DOB = Input::get('DOB');
-                $status = Input::get('status');
-$phone_cell = Input::get('phone_cell');
-$country_code = Input::get('country_code');
-$city = Input::get('city');
-$street = Input::get('street');
-$email = Input::get('email');
-$visittype = Input::get('visittype');
-                \DB::table('patient_data')->insert(['fname' => $fname, 'sex' => $sex,'drivers_license' => $drivers_license, 'blood_group' => $blood_group, 'age' => $age, 'postal_code' => $postal_code,'state' => $state,'DOB' => $DOB,'status' => $status,'phone_cell'=>$phone_cell,'country_code'=>$country_code,'city'=>$city,'street'=>$street,'email'=>$email,'visittype'=>$visittype]);
-    
-                return \Redirect::back()->with('success','Patient has been created');
+    public function store(Patient $patient, PatientRequest $request) {
+        $patient->fill($request->all())->save();
+        $services = DrgServices::where('drg_id', '=', $request->input('drg_id'))->get();
+        foreach ($services as $service) {
+//            $hos_service = HospitalService::whereId($service->service_id)->first();
+//            $cost = $hos_service->budget_cost;
+            DrgProgress::create([
+                'pid' => $request->input('pid'),
+                'episode_id' => $request->input('episode_id'),
+                'drg_id' => $request->input('drg_id'),
+                'service_id' => $service->service_id,
+                'units' => $service->units,
+                'service_status' => 0,
+                'authorized' => 0,
+                'provider' => $service->provider
+            ]);
+        }
+        return \Redirect::back()->with('success', 'Patient has been created');
     }
 
     /**
@@ -62,9 +77,9 @@ $visittype = Input::get('visittype');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($id) {
+        $patients = Patient::whereId($id)->first();
+        return view('patients.patient_drg_progress', compact('patients'));
     }
 
     /**
@@ -73,8 +88,7 @@ $visittype = Input::get('visittype');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         //
     }
 
@@ -85,19 +99,26 @@ $visittype = Input::get('visittype');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //
     }
-
+    public function updateProgress(DrgProgress $progresses, $id) {
+        $progress = $progresses->whereId($id)->first();
+        $progress->units = Input::get('units');
+        $progress->actual_cost = Input::get('actual_cost');
+        $progress->service_status = Input::get('service_status');
+        $progress->authorized = Input::get('authorized');
+        $progress->save();
+        return redirect()->back()->with('success','Changes have been updated successfully!');
+    }
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
     }
+
 }

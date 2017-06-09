@@ -109,4 +109,9 @@ class DrgServicesController extends Controller
     {
         //
     }
+        public function getDelete($id)
+    {
+            return redirect()->back()->with('fails','Cannot delete a service registered by the patient');
+//            DrgServices::whereId($id)->delete();
+    }
 }

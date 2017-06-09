@@ -47,7 +47,7 @@
 @if(Session::has('fails'))
 <div class="alert alert-danger alert-dismissable">
     <i class="fa fa-ban"></i>
-    <b>Alert!</b>
+    <b>{!! Lang::get('lang.alert') !!}!</b>
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
     {{Session::get('fails')}}
 </div>
@@ -147,7 +147,7 @@
                             <th class="">UINTS COST</th>
                             <th>TOTAL COST</th>
                             <th>Provider</th>
-                            <th>Action</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -162,27 +162,8 @@
                             <td class="">{!! $services->budget_cost !!}</td>
                             <td class="">{!! $total_cost !!}</td>
                             <td>{!! $drg_service->provider !!}</td>
-                            <td><i class="fa fa-trash" data-toggle="modal" data-target="#{{$drg_service->id}}delete"></i>
-                                                            
-                                                            <div class="modal fade" id="{{$drg_service->id}}delete">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                 <h4 class="modal-title">Delete</h4>
-                                      </div>
-                                         <div class="modal-body">
-                                             <p>Are you sure you want to Delete ?</p>
-                                                </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                                                            {!! link_to_route('drg_services.delete','Delete',[$drg_service->id],['id'=>'delete','class'=>'btn btn-danger btn-sm']) !!}
-                                                                        </div>
-                                                                    </div> 
-                                                                </div>
-                                                            </div> 
+
                         </tr>
-                        
                         <?php } ?>
 
                     </tbody>
