@@ -32,7 +32,7 @@
   </head>
   <body class="login-body">
          <div class="login-logo">
-          <img src="img/login_logo.png" alt=""/ style="width: 19%;">
+          <img src="{{asset('img/login_logo.png')}}" alt=""/ style="width: 19%;">
       </div>
 	  @yield('content')
        @yield('body')

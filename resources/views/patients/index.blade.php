@@ -61,7 +61,7 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Eisode Id</th>
-                                    <th>Date Of Admission</th>
+                                    <th>Date Of Birth</th>
                                     <th>DRG</th>
                                     <th>Action</th>
                                 </tr>
@@ -78,8 +78,9 @@
                                     <th></th>
                                     <th>Name</th>
                                     <th>Episode Id</th>
-                                    <th>Date Of Admission</th>
+                                    <th>Date Of Birth</th>
                                     <th>Patient Id</th>
+                                    <th>Action</th>
                                 </tr>
                                 
                                 </tfoot>

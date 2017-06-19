@@ -29,8 +29,6 @@ class CreateAdmissionDetailsTable extends Migration {
             $table->string('reason_for_discharge');
             $table->string('discharged_by');
             $table->integer('total_no_unit');
-            $table->dateTime('create_date');
-            $table->dateTime('update_date');
             $table->string('created_by');
             $table->timestamps();
         });

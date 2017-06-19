@@ -17,6 +17,7 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('dashboard');
 });
+Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
 Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@getLogin']);
 Route::post('post-login',  ['as' => 'post.login', 'uses' => 'Auth\LoginController@postLogin']);
 //Route::get('patients', 'Auth\PatientController@index');	
@@ -25,4 +26,6 @@ Route::resource('drgs', 'Drg\DrgController');
 Route::resource('drg-services', 'DrgServices\DrgServicesController');
 Route::patch('patients/progress-edit/{id}','Patient\PatientController@updateProgress');
 Route::get('drg_services-delete/{id}', ['as' => 'drg_services.delete', 'uses' => 'DrgServices\DrgServicesController@getDelete']);
-        
+Route::post('post-admission/{id}',  ['as' => 'patients.admission', 'uses' => 'Patient\PatientController@admissionDetails']);
+Route::patch('admission-edit/{id}',  ['as' => 'admission.edit', 'uses' => 'Patient\PatientController@admissionEdit']);
+

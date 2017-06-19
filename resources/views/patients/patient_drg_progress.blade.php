@@ -47,9 +47,15 @@
     {{Session::get('fails')}}
 </div>
 @endif
+<?php $admission_data = \App\Admission::where('pid','=',$patients->pid)->first(); if(isset($admission_data)) {  $admit_date = $admission_data->admit_date->toDayDateTimeString();$discharge_date = $admission_data->discharge_date->toDayDateTimeString();$final_discharge_date = $admission_data->actual_discharge_date->toDayDateTimeString(); ?>
+
                             <header class="panel-heading ">
                                 DRG Progress of {!! $patients->fname.' '. $patients->lname; !!}&nbsp;&nbsp;
-                                <!--<button type="button" class="btn btn-info m-b-10" data-toggle="modal" href="#myModal"><i class="fa fa-plus"></i></button>-->
+                                <?php if(!isset($admission_data)) {?>
+                                <button type="button" class="btn btn-info m-b-10" data-toggle="modal" href="#myModal"><i class="fa fa-sign-in"></i> Admission</button>
+                                <?php } if(!isset($admission_data->discharged_by)) {?>
+                                <button type="button" class="btn btn-info m-b-10" data-toggle="modal" href="#editp">Discharge <i class="fa fa-sign-out"></i></button>
+                               <?php } ?>
                                 <span class="tools pull-right">
                                     <a class="fa fa-repeat box-refresh" href="javascript:;"></a>
                                     <a class="t-close fa fa-times" href="javascript:;"></a>
@@ -57,7 +63,16 @@
                                 
                             </header>
 <?php $title = App\Drg::whereId($patients->drg_id)->first(); ?>
-<header class="panel-heading ">Group: <b>{!! $title->title !!}</b></header>
+<header class="panel-heading ">Group: <b>{!! $title->title !!}</b>
+| Admission Date: <b>{!! $admit_date !!}</b>
+<?php if(isset($admission_data->discharged_by)) {
+    $discharged_by = App\User::whereId($admission_data->discharged_by)->first(); ?>
+| Discharged By: <b>{!! $discharged_by->fname !!}</b> | Discharge Date: <b>{!! $final_discharge_date !!}</b></header>
+<?php } else { ?>
+| Discharge Date: <b>{!! $discharge_date !!}</b></header>
+<?php } } else { ?>
+</header>
+<?php } ?>
                             <table class="table data-table row-details-data-table" cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
@@ -171,4 +186,103 @@
 
             </div>
             <!--body wrapper end-->
+@stop
+@section('content')
+
+    <!--modal for add pateind-->
+    <div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+                        <div class="modal-dialog">
+                                              {!!  Form::open(['url'=>'post-admission/'.$patients->pid, 'method'=>'POST','class'=>'form-horizontal']) !!}
+                               
+                            <div class="modal-content">
+                                
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">Patient admission detials</h4>
+                                </div>
+                                <div class="modal-body">
+                <div class="form-group">
+                                <label class="control-label col-md-2">Admission Date</label>
+                                <div class="col-md-10">
+                                    <input size="16" type="text" name="admit_date" class="form_datetime form-control">
+                                </div>
+                            </div>
+  
+                <div class="form-group">
+                                <label class="control-label col-md-2">Discharge Date</label>
+                                <div class="col-md-10">
+                                    <input size="16" type="text" name="discharge_date" class="form_datetime form-control">
+                                </div>
+                            </div>
+  
+                                </div>
+                                <div class="modal-footer">
+                                    <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+                                    {{ Form::submit('Save', array('class' => 'btn btn-success')) }}
+                                </div>
+                   
+                            </div>
+                                                          			  {!! Form::close() !!}
+                            </div>
+                        </div>
+                    <!--end of patient add-->
+                    <!--edit patient-->
+                    <div class="modal fade in" id="editp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                     {!!  Form::open(['url'=>'admission-edit/'.$admission_data->pid, 'method'=>'PATCH','class'=>'form-horizontal']) !!}
+                               
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">Edit Patient</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Reason for Discharge</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" name="reason_for_discharge" class="form-control" id="inputEmail1" >
+                                        <!-- <p class="help-block">Example block-level help text here.</p> -->
+                                    </div>
+                                </div>
+<!--                                <div class="form-group">
+                                    <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Episode Id</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control" id="inputPassword1" placeholder="Episode Id">
+                                         <p class="help-block">Example block-level help text here.</p> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Date Of Submission</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control" id="inputPassword1" placeholder="DAte Of Submission">
+                                         <p class="help-block">Example block-level help text here.</p> 
+                                    </div>
+                                </div>-->
+                              </div>
+                                <div class="modal-footer">
+                                    <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+                                    <button class="btn btn-success" type="submit" id="showtoast">Save changes</button>
+                                </div>
+                                     {!! Form::close() !!}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--end of patient add-->
+<!--                    <script type="text/javascript">
+                    function randomNumber(len) {
+    var randomNumber;
+    var n = '';
+
+    for(var count = 0; count < len; count++) {
+        randomNumber = Math.floor(Math.random() * 10);
+        n += randomNumber.toString();
+    }
+    return n;
+}
+
+document.getElementById("ACCOUNT").value = randomNumber(6);
+</script>-->
 @stop

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Requests\LoginRequest;
@@ -24,7 +25,9 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers {
+    logout as performLogout;
+}
     // if auth is user
     protected $redirectAfterLogout = '/';
     protected $loginPath = '/login';
@@ -43,13 +46,19 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => ['logout', 'logout']]);
+    //    $this->middleware('guest', ['except' => ['logout', 'logout']]);
     }
 	    /**
      * Get login page.
      *
      * @return type Response
      */
+    public function logout(Request $request)
+{
+    $this->performLogout($request);
+    return redirect()->route('login');
+}
+
     public function getLogin()
     {
             if (Auth::user()) {

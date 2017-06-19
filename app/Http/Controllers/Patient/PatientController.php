@@ -10,6 +10,8 @@ use App\Http\Requests\PatientRequest;
 use App\DrgProgress;
 use App\DrgServices;
 use App\HospitalService;
+use App\Admission;
+use Auth;
 
 class PatientController extends Controller {
 
@@ -102,15 +104,42 @@ class PatientController extends Controller {
     public function update(Request $request, $id) {
         //
     }
+
     public function updateProgress(DrgProgress $progresses, $id) {
         $progress = $progresses->whereId($id)->first();
         $progress->units = Input::get('units');
         $progress->actual_cost = Input::get('actual_cost');
         $progress->service_status = Input::get('service_status');
+        if ($progress->service_status == 1) {
+            $progress->service_date = \Carbon\Carbon::now();
+        }
         $progress->authorized = Input::get('authorized');
         $progress->save();
-        return redirect()->back()->with('success','Changes have been updated successfully!');
+        return redirect()->back()->with('success', 'Changes have been updated successfully!');
     }
+
+    public function admissionDetails(Admission $admission, $id) {
+        $patient_data = Patient::where('pid', '=', $id)->first();
+        $admission->pid = $id;
+        $admission->patient_episode_id = $patient_data->episode_id;
+        $admission->patient_name = $patient_data->fname . $patient_data->lname;
+        $admission->provider = Auth::user()->id;
+        $admission->created_by = Auth::user()->id;
+        $admission->admit_date = Input::get('admit_date');
+        $admission->discharge_date = Input::get('discharge_date');
+        $admission->save();
+        return redirect()->back()->with('success', 'Data has been saved!');
+    }
+
+    public function admissionEdit(Admission $admission, $id) {
+        $admission_data = $admission->where('pid', '=', $id)->first();
+        $admission_data->discharged_by = Auth::user()->id;
+        $admission_data->reason_for_discharge = Input::get('reason_for_discharge');
+        $admission_data->actual_discharge_date = \Carbon\Carbon::now();
+        $admission_data->save();
+        return redirect()->back()->with('success', $admission_data->patient_name.' has been discharged!');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
