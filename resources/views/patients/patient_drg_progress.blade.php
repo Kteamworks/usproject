@@ -47,15 +47,60 @@
     {{Session::get('fails')}}
 </div>
 @endif
-<?php $admission_data = \App\Admission::where('pid','=',$patients->pid)->first(); if(isset($admission_data)) {  $admit_date = $admission_data->admit_date->toDayDateTimeString();$discharge_date = $admission_data->discharge_date->toDayDateTimeString();$final_discharge_date = $admission_data->actual_discharge_date->toDayDateTimeString(); ?>
 
                             <header class="panel-heading ">
                                 DRG Progress of {!! $patients->fname.' '. $patients->lname; !!}&nbsp;&nbsp;
+                                <?php $admission_data = \App\Admission::where('pid','=',$patients->pid)->first(); if(isset($admission_data)) {  $admit_date = $admission_data->admit_date->toDayDateTimeString();$discharge_date = $admission_data->discharge_date->toDayDateTimeString(); } ?>
+
                                 <?php if(!isset($admission_data)) {?>
                                 <button type="button" class="btn btn-info m-b-10" data-toggle="modal" href="#myModal"><i class="fa fa-sign-in"></i> Admission</button>
-                                <?php } if(!isset($admission_data->discharged_by)) {?>
+                                <?php } else { if(empty($admission_data->discharged_by)) { ?>
                                 <button type="button" class="btn btn-info m-b-10" data-toggle="modal" href="#editp">Discharge <i class="fa fa-sign-out"></i></button>
-                               <?php } ?>
+                                                    <!--edit patient-->
+                    <div class="modal fade in" id="editp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                     {!!  Form::open(['url'=>'admission-edit/'.$admission_data->pid, 'method'=>'PATCH','class'=>'form-horizontal']) !!}
+                               
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">Edit Patient</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Reason for Discharge</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" name="reason_for_discharge" class="form-control" id="inputEmail1" >
+                                        <!-- <p class="help-block">Example block-level help text here.</p> -->
+                                    </div>
+                                </div>
+<!--                                <div class="form-group">
+                                    <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Episode Id</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control" id="inputPassword1" placeholder="Episode Id">
+                                         <p class="help-block">Example block-level help text here.</p> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Date Of Submission</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control" id="inputPassword1" placeholder="DAte Of Submission">
+                                         <p class="help-block">Example block-level help text here.</p> 
+                                    </div>
+                                </div>-->
+                              </div>
+                                <div class="modal-footer">
+                                    <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+                                    <button class="btn btn-success" type="submit" id="showtoast">Save changes</button>
+                                </div>
+                                     {!! Form::close() !!}
+                            </div>
+                        </div>
+                    </div>
+
+                                <?php } } ?>
                                 <span class="tools pull-right">
                                     <a class="fa fa-repeat box-refresh" href="javascript:;"></a>
                                     <a class="t-close fa fa-times" href="javascript:;"></a>
@@ -64,8 +109,11 @@
                             </header>
 <?php $title = App\Drg::whereId($patients->drg_id)->first(); ?>
 <header class="panel-heading ">Group: <b>{!! $title->title !!}</b>
+    <?php if(isset($admission_data)) { ?>
 | Admission Date: <b>{!! $admit_date !!}</b>
-<?php if(isset($admission_data->discharged_by)) {
+<?php if( ! empty($admission_data['discharged_by'])) {
+
+    $final_discharge_date = $admission_data->actual_discharge_date->toDayDateTimeString();
     $discharged_by = App\User::whereId($admission_data->discharged_by)->first(); ?>
 | Discharged By: <b>{!! $discharged_by->fname !!}</b> | Discharge Date: <b>{!! $final_discharge_date !!}</b></header>
 <?php } else { ?>
@@ -226,49 +274,6 @@
                             </div>
                         </div>
                     <!--end of patient add-->
-                    <!--edit patient-->
-                    <div class="modal fade in" id="editp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                     {!!  Form::open(['url'=>'admission-edit/'.$admission_data->pid, 'method'=>'PATCH','class'=>'form-horizontal']) !!}
-                               
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h4 class="modal-title">Edit Patient</h4>
-                                </div>
-                                <div class="modal-body">
-
-                                    <form class="form-horizontal" role="form">
-                                <div class="form-group">
-                                    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Reason for Discharge</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" name="reason_for_discharge" class="form-control" id="inputEmail1" >
-                                        <!-- <p class="help-block">Example block-level help text here.</p> -->
-                                    </div>
-                                </div>
-<!--                                <div class="form-group">
-                                    <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Episode Id</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="inputPassword1" placeholder="Episode Id">
-                                         <p class="help-block">Example block-level help text here.</p> 
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Date Of Submission</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="inputPassword1" placeholder="DAte Of Submission">
-                                         <p class="help-block">Example block-level help text here.</p> 
-                                    </div>
-                                </div>-->
-                              </div>
-                                <div class="modal-footer">
-                                    <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
-                                    <button class="btn btn-success" type="submit" id="showtoast">Save changes</button>
-                                </div>
-                                     {!! Form::close() !!}
-                            </div>
-                        </div>
-                    </div>
 
                     <!--end of patient add-->
 <!--                    <script type="text/javascript">

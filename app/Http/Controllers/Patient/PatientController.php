@@ -125,8 +125,8 @@ class PatientController extends Controller {
         $admission->patient_name = $patient_data->fname . $patient_data->lname;
         $admission->provider = Auth::user()->id;
         $admission->created_by = Auth::user()->id;
-        $admission->admit_date = Input::get('admit_date');
-        $admission->discharge_date = Input::get('discharge_date');
+        $admission->admit_date = Input::get('admit_date').':00';
+        $admission->discharge_date = Input::get('discharge_date').':00';
         $admission->save();
         return redirect()->back()->with('success', 'Data has been saved!');
     }

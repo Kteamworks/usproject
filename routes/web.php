@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',  ['as' => '/', 'uses' => 'Auth\LoginController@getLogin']);
 Route::get('/home', function () {
     return view('dashboard');
 });
